@@ -1,0 +1,36 @@
+
+
+$primary-color: #0593A2;
+$secondary-color: #E3371E;
+$terc-color: #FF7A48;
+$quatro-color: #103778;
+$text-color: white;
+$background-color:  #151F30;
+
+
+$background-gradient-color: linear-gradient(45deg, $background-color, rgb(44, 43, 43));
+
+$font-size: 16px;
+
+
+.main-body{
+	padding: 15px;
+}
+
+:root {
+	font-size: $font-size;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+
+	background-color: $background-color;
+	color: $text-color;
+}
+
+
+
+// $primary-color: red;
+// $text-color: white;
+// $background-color: #141414;
+
+// $background-gradient-color: linear-gradient(45deg, index.$background-color, rgb(44, 43, 43));
