@@ -1,6 +1,7 @@
 @use "../../index.scss";
 
 .home{
+   min-height: 60vh;
 h1{
    font-size: 2rem;
    color: index.$secondary-color;

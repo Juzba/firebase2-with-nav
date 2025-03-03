@@ -1,0 +1,47 @@
+@use '../../index.scss';
+
+.loading {
+    position: relative;
+    .load-box {
+        width: 60px;
+        height: 60px;
+        border: 10px solid index.$primary-color;
+        border-radius: 50%;
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        animation: rotation 2s infinite linear, color 2s infinite linear;
+    }
+
+    p {
+        color: index.$primary-color;
+        position: absolute;
+        font-weight: 500;
+        font-size: 16px;
+        top: 13px;
+        left: 13px;
+        text-shadow: 0 0 2px index.$secondary-color;
+    }
+    @keyframes rotation {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes color {
+        0% {
+            border-left-color: index.$secondary-color;
+            border-right-color: index.$secondary-color;
+        }
+        50% {
+            border-left-color: index.$primary-color;
+            border-right-color: index.$primary-color;
+        }
+        100% {
+            border-left-color: index.$secondary-color;
+            border-right-color: index.$secondary-color;
+        }
+    }
+}

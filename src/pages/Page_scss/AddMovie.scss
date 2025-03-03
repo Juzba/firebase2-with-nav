@@ -1,6 +1,7 @@
 @use "../../index.scss";
 
 .add-movie {
+	min-height: 60vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
