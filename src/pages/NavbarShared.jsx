@@ -5,11 +5,11 @@ import Footer from "./page_components/Footer";
 
 const NavbarShared = () => {
 	return (
-		<nav>
+		<>
 			<Navbar />
 			<Outlet />
 			<Footer />
-		</nav>
+		</>
 	);
 };
 
