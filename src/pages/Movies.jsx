@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Loading from './page_components/Loading';
 import './Page_scss/Movies.scss';
 import { firestoreDB } from '../firebase/config';
-import { collection, deleteDoc, doc, onSnapshot } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
 const Movies = () => {
@@ -14,9 +14,8 @@ const Movies = () => {
     };
 
     useEffect(() => {
-        const unsub = onSnapshot(
-            collection(firestoreDB, 'movies_two'),
-            (snapshot) => {
+        getDocs(collection(firestoreDB, 'movies_two'))
+            .then((snapshot) => {
                 if (snapshot.empty) {
                     setError('Databáze je prázdná');
                     setDataDB([]);
@@ -28,29 +27,30 @@ const Movies = () => {
                     setDataDB(newData);
                     setError('');
                 }
-            },
-            (err) => setError(err.message)
-        );
-
-        return () => unsub();
+            })
+            .catch((err) => setError(err.message));
     }, []);
 
     return (
         <section className="movies">
             <h1>Movies</h1>
-            {dataDB.length > 0 && !error
-                ? dataDB.map(({ id, title }) => {
-                      return (
-                          <div key={id} className="one-movie">
-                              <h3>{title}</h3>
-                              <div>
-                                  <Link to={`/movieinfo/${id}`}>Více informací</Link>
-                                  <button onClick={() => DeleteMovie(id)}>Smazat</button>
-                              </div>
-                          </div>
-                      );
-                  })
-                : error? <p>{error}</p> : <Loading />}
+            {dataDB.length > 0 && !error ? (
+                dataDB.map(({ id, title }) => {
+                    return (
+                        <div key={id} className="one-movie">
+                            <h3>{title}</h3>
+                            <div>
+                                <Link to={`/movieinfo/${id}`}>Více informací</Link>
+                                <button onClick={() => DeleteMovie(id)}>Smazat</button>
+                            </div>
+                        </div>
+                    );
+                })
+            ) : error ? (
+                <p>{error}</p>
+            ) : (
+                <Loading />
+            )}
         </section>
     );
 };
