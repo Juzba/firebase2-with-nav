@@ -14,7 +14,12 @@ const AddMovie = () => {
         e.preventDefault();
         if (title && minage && time) {
             console.log(`${title} ${minage} ${time}`);
-            await addDoc(collection(firestoreDB, 'movies_two'), { title, minage, time });
+
+            try {
+                await addDoc(collection(firestoreDB, 'movies_two'), { title, minage: parseInt(minage), time: parseInt(time) });
+            } catch (error) {
+                console.log(error.message);
+            }
 
             setTitle('');
             setMinAge('');
@@ -38,7 +43,7 @@ const AddMovie = () => {
                     type="text"
                     id="userName"
                     name="userName"
-					autoComplete='off'
+                    autoComplete="off"
                 />
                 <input
                     value={minage}

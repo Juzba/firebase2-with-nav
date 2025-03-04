@@ -12,12 +12,10 @@ const MovieInfo = () => {
     const { id } = useParams();
 
     useEffect(() => {
-     console.log("start");
-     
         getDoc(doc(firestoreDB, 'movies_two', id))
             .then(
                 (docSnap) => {
-                    if (docSnap) {
+                    if (docSnap.exists()) {
                         setMovieInfo(docSnap.data());
                         setError('');
                     } else {
@@ -48,9 +46,6 @@ const MovieInfo = () => {
                             </tr>
                         </thead>
                     </table>
-
-                    {/* <p>{`Dostupné od věku: +${movieInfo.minage}.`}</p>
-                    <p>{`Délka filmu: ${movieInfo.time}min.`}</p> */}
                     <Link to={'/movies'}>Návrat na stránku Movies.</Link>
                 </div>
             ) : (

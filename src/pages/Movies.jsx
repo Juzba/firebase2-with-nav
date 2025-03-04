@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Loading from './page_components/Loading';
 import './Page_scss/Movies.scss';
 import { firestoreDB } from '../firebase/config';
-import { collection, deleteDoc, doc, getDocs, onSnapshot } from 'firebase/firestore';
+import { collection, deleteDoc, doc, onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
 const Movies = () => {
@@ -14,21 +14,20 @@ const Movies = () => {
     };
 
     useEffect(() => {
-        getDocs(collection(firestoreDB, 'movies_two'))
-            .then((snapshot) => {
-                if (snapshot.empty) {
-                    setError('Databáze je prázdná');
-                    setDataDB([]);
-                } else {
-                    let newData = [];
-                    snapshot.docs.forEach((oneDoc) => {
-                        newData.push({ id: oneDoc.id, ...oneDoc.data() });
-                    });
-                    setDataDB(newData);
-                    setError('');
-                }
-            })
-            .catch((err) => setError(err.message));
+        const unsub = onSnapshot(collection(firestoreDB, 'movies_two'), (snapshot) => {
+            if (snapshot.empty) {
+                setError('Databáze je prázdná');
+                setDataDB([]);
+            } else {
+                let newData = [];
+                snapshot.docs.forEach((oneDoc) => {
+                    newData.push({ id: oneDoc.id, ...oneDoc.data() });
+                });
+                setDataDB(newData);
+                setError('');
+            }
+        });
+        return () => unsub();
     }, []);
 
     return (
